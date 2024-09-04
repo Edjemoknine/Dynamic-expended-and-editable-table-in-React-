@@ -1,5 +1,5 @@
-import SongSearch from "./SongSearch";
-import AddSong from "./AddSong";
+import AddSong from "../AddSong";
+import SongSearch from "../SongSearch";
 
 const TableHeader = () => {
   return (

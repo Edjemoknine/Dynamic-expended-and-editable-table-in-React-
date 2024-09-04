@@ -1,5 +1,6 @@
-import { Button } from "../ui/button";
-import { PaginationComp } from "./Pagination";
+import { Button } from "@/components/ui/button";
+import { PaginationComp } from "../Pagination";
+
 type Props = {
   currentPage: number;
   pageCount: number;
