@@ -49,7 +49,7 @@ const SongProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(fakedata));
-  }, []);
+  }, [data]);
 
   const deleteSong = (id: number) => {
     setData(data.filter((item) => item.id !== id));

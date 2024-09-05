@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useCallback, useEffect, useState } from "react";
 import useDebounce from "@/utils/useDebounce";
@@ -13,13 +14,13 @@ type Props = {
   data: TabaleItemProps[];
   columns: string[];
 };
-const Table2 = ({ data, columns }: Props) => {
+const Table2 = ({ data }: Props) => {
   const { term } = useSongs();
   const [filtredData, setfiltredData] = useState(() => data);
   const debterm = useDebounce(term, 500);
   // Sorting
 
-  const [sorted, setSorted] = useState({ keyof: "song", direction: "asc" });
+  const [sorted, setSorted] = useState({ keyof: "id", direction: "asc" });
 
   const handleSlectKey = (key: string) => {
     setSorted({
@@ -65,7 +66,7 @@ const Table2 = ({ data, columns }: Props) => {
 
   const filtredSearch = useCallback(() => {
     setfiltredData(
-      data.filter(
+      data?.filter(
         (item: TabaleItemProps) =>
           item.song.toLowerCase().includes(debterm.toLowerCase()) ||
           item.artist.toLowerCase().includes(debterm.toLowerCase())
@@ -107,7 +108,7 @@ const Table2 = ({ data, columns }: Props) => {
     setfiltredData([...filtredData.filter((item) => !item.checked)]);
   };
 
-  // add editable cell
+  // Update changes
 
   return (
     <>
@@ -119,13 +120,12 @@ const Table2 = ({ data, columns }: Props) => {
       <div className="table w-full  rounded-xl overflow-hidden shadow  border table-auto  border-collapse  border-spacing-2">
         <THead
           allChecked={allChecked}
-          columns={columns}
           handleCheck={handleSelect}
           handleSlectKey={handleSlectKey}
           sorted={sorted}
         />
         <TBody
-          columns={columns}
+          setfiltredData={setfiltredData}
           currentItems={currentItems}
           handleCheck={handleSelect}
         />
