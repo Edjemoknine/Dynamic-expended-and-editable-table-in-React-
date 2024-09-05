@@ -11,7 +11,7 @@ const Checkbox = ({ id, checked, handleCheck }: Props) => {
       type="checkbox"
       checked={checked}
       onChange={(e) => handleCheck(e.target.id, e.target.checked)}
-      className=" bg-zinc-700 w-4 translate-y-3 mx-3"
+      className=" bg-zinc-700 w-4 translate-y-3 mx-3 cursor-pointer"
     />
   );
 };

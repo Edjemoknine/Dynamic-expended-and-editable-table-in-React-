@@ -45,8 +45,8 @@ const TableRow = ({
       </div>
       {collapsed && (
         <tr>
-          <td colSpan={5} className="px-6 py-4 bg-gray-700 text-stone-50">
-            <div className="">{"row.details"}</div>
+          <td colSpan={5} className="px-6 py-4 bg-gray-800 text-stone-50">
+            <div className="">{item["song"]} Song details</div>
           </td>
         </tr>
       )}
