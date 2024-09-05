@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { TabaleItemProps } from "@/types/Song";
 import TCell from "./TCell";
 import Checkbox from "../Checkbox";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const TableRow = ({
   item,
@@ -27,8 +28,8 @@ const TableRow = ({
         <div className="flex items-center">
           <Checkbox
             handleCheck={handleCheck}
-            checked={item?.checked}
-            id={item.id}
+            checked={item?.checked!}
+            id={item.id.toString()}
           />
           <ChevronDown
             onClick={() => setCollapsed(!collapsed)}

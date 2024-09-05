@@ -37,13 +37,13 @@ const Table2 = ({ data, columns }: Props) => {
     const { keyof, direction } = sorted;
     if (direction === "asc") {
       return array.sort((a, b) =>
-        a[keyof as keyof TabaleItemProps] > b[keyof as keyof TabaleItemProps]
+        a[keyof as keyof TabaleItemProps]! > b[keyof as keyof TabaleItemProps]!
           ? 1
           : -1
       );
     } else {
       return array.sort((a, b) =>
-        a[keyof as keyof TabaleItemProps] < b[keyof as keyof TabaleItemProps]
+        a[keyof as keyof TabaleItemProps]! < b[keyof as keyof TabaleItemProps]!
           ? 1
           : -1
       );
@@ -51,7 +51,7 @@ const Table2 = ({ data, columns }: Props) => {
   }
   // Pagination
   const ItemPerpage = 5;
-  const [Perpage, setPerpage] = useState(ItemPerpage);
+  const [Perpage, setPerpage] = useState<number | string>(ItemPerpage);
 
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * Number(Perpage);
@@ -89,7 +89,7 @@ const Table2 = ({ data, columns }: Props) => {
       setAllChecked(!allChecked);
     } else {
       filtredData.map((item) =>
-        item.id == id ? (item.checked = !item.checked) : null
+        item.id == Number(id) ? (item.checked = !item.checked) : null
       );
       setfiltredData([...filtredData]);
 
@@ -99,9 +99,24 @@ const Table2 = ({ data, columns }: Props) => {
     }
   };
 
+  // check selected rows
+  const selectedRows = filtredData.some((item) => item.checked);
+  console.log(selectedRows);
+  // delete multiple rows
+  const deleteSelectedRows = () => {
+    console.log(filtredData.filter((item) => !item.checked));
+    setfiltredData([...filtredData.filter((item) => !item.checked)]);
+  };
+
+  // add editable cell
+
   return (
     <>
-      <TableHeader />
+      <TableHeader
+        selectedRows={selectedRows}
+        deletedRowsAction={deleteSelectedRows}
+      />
+
       <div className="table w-full  rounded-xl overflow-hidden shadow  border table-auto  border-collapse  border-spacing-2">
         <THead
           allChecked={allChecked}
@@ -118,8 +133,8 @@ const Table2 = ({ data, columns }: Props) => {
       </div>
 
       <div className="flex items-center  justify-between mt-8">
-        <SelectPgae value={Perpage} onChange={setPerpage} />
-        {filtredData.length > Perpage && (
+        <SelectPgae value={Number(Perpage)} onChange={setPerpage} />
+        {filtredData.length > Number(Perpage) && (
           <TFooter
             currentPage={currentPage}
             pageCount={pageCount}

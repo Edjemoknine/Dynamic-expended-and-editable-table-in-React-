@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/select";
 
 interface Props {
-  value: string;
+  value: number;
   onChange: (value: string) => void;
 }
 export function SelectPgae({ value, onChange }: Props) {
   return (
-    <Select onValueChange={onChange} value={value}>
+    <Select onValueChange={onChange} value={value.toString()}>
       <SelectTrigger className="w-[70px]">
         <SelectValue defaultValue={5} placeholder="Select a fruit" />
       </SelectTrigger>

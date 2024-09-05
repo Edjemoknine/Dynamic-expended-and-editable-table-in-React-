@@ -3,4 +3,5 @@ export type TabaleItemProps = {
   song: string;
   artist: string;
   year: number;
+  checked?: boolean;
 };
