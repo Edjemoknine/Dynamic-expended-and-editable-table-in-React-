@@ -18,7 +18,8 @@ type InitialState = {
   deleteSong: (id: number) => void;
   setSelected: (item: TabaleItemProps | null) => void;
   selected?: TabaleItemProps | null;
-  onChangeInput: (e, id: number) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChangeInput: (e: any, id: number) => void;
 };
 const SongContext = createContext<InitialState>({
   data: fakedata,
