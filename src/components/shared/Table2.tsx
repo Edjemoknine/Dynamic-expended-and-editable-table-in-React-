@@ -7,6 +7,7 @@ import THead from "./Table/THead";
 import TBody from "./Table/TBody";
 import TFooter from "./Table/TFooter";
 import TableHeader from "./Table/TableHeader";
+import { SelectPgae } from "./PerPage";
 
 type Props = {
   data: TabaleItemProps[];
@@ -50,14 +51,16 @@ const Table2 = ({ data, columns }: Props) => {
   }
   // Pagination
   const ItemPerpage = 5;
+  const [Perpage, setPerpage] = useState(ItemPerpage);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const indexOfLastItem = currentPage * ItemPerpage;
-  const indexOfFirstItem = indexOfLastItem - ItemPerpage;
+  const indexOfLastItem = currentPage * Number(Perpage);
+  const indexOfFirstItem = indexOfLastItem - Number(Perpage);
   const currentItems = sortData(filtredData).slice(
     indexOfFirstItem,
     indexOfLastItem
   );
-  const pageCount = Math.ceil(filtredData.length / ItemPerpage);
+  const pageCount = Math.ceil(filtredData.length / Number(Perpage));
   //
 
   const filtredSearch = useCallback(() => {
@@ -113,14 +116,17 @@ const Table2 = ({ data, columns }: Props) => {
           handleCheck={handleSelect}
         />
       </div>
-      {filtredData.length > ItemPerpage && (
-        <TFooter
-          ItemPerpage={ItemPerpage}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          setCurrentPage={setCurrentPage}
-        />
-      )}
+
+      <div className="flex items-center  justify-between mt-8">
+        <SelectPgae value={Perpage} onChange={setPerpage} />
+        {filtredData.length > Perpage && (
+          <TFooter
+            currentPage={currentPage}
+            pageCount={pageCount}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+      </div>
     </>
   );
 };

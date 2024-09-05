@@ -7,16 +7,18 @@ type Props = {
 };
 const TBody = ({ currentItems, columns, handleCheck }: Props) => {
   return (
-    <div className="table-row-group p-4">
-      {currentItems.map((item: TabaleItemProps) => (
-        <TableRow
-          columns={columns}
-          item={item}
-          key={item.song}
-          handleCheck={handleCheck}
-        />
-      ))}
-    </div>
+    <>
+      <div className="table-row-group p-4">
+        {currentItems.map((item: TabaleItemProps) => (
+          <TableRow
+            columns={columns}
+            item={item}
+            key={item.song}
+            handleCheck={handleCheck}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
