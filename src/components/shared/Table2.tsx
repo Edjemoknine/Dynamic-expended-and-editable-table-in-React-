@@ -101,7 +101,6 @@ const Table2 = ({ data, columns }: Props) => {
 
   // check selected rows
   const selectedRows = filtredData.some((item) => item.checked);
-  console.log(selectedRows);
   // delete multiple rows
   const deleteSelectedRows = () => {
     console.log(filtredData.filter((item) => !item.checked));

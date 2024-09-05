@@ -18,6 +18,7 @@ type InitialState = {
   deleteSong: (id: number) => void;
   setSelected: (item: TabaleItemProps | null) => void;
   selected?: TabaleItemProps | null;
+  onChangeInput: (e, id: number) => void;
 };
 const SongContext = createContext<InitialState>({
   data: fakedata,
@@ -29,6 +30,7 @@ const SongContext = createContext<InitialState>({
   deleteSong: () => {},
   setSelected: () => {},
   selected: null,
+  onChangeInput: () => {},
 });
 // Function to fetch data from localStorage
 const fetchData = (): TabaleItemProps[] => {
@@ -52,6 +54,18 @@ const SongProvider = ({ children }: { children: ReactNode }) => {
     setData(data.filter((item) => item.id !== id));
   };
 
+  const onChangeInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => {
+    const { name, value } = e.target;
+    const editData = data.map((item) =>
+      item.id === id && name ? { ...item, [name]: value } : item
+    );
+
+    setData(editData);
+  };
+
   return (
     <SongContext.Provider
       value={{
@@ -64,6 +78,7 @@ const SongProvider = ({ children }: { children: ReactNode }) => {
         deleteSong,
         setSelected,
         selected,
+        onChangeInput,
       }}
     >
       {children}
