@@ -8,6 +8,13 @@ import { cn } from "@/lib/utils";
 import { Check, ChevronDown } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
+type UpdatedValue = {
+  id: number;
+  song: string;
+  artist: string;
+  year: number;
+};
+
 const TableRow = ({
   item,
   handleCheck,
@@ -21,12 +28,13 @@ const TableRow = ({
 }) => {
   const [collapsed, setCollapsed] = useState(false);
   //Updated state
-  const [song, setSong] = useState(item.song);
-  const [artist, setArtist] = useState(item.artist);
-  const [year, setYear] = useState(item.year);
+  const [song, setSong] = useState<string>(item.song);
+  const [artist, setArtist] = useState<string>(item.artist);
+  const [year, setYear] = useState<number>(item.year);
 
-  const [isRowChange, setIsRowChange] = useState(false);
-  const [updatedValues, setUpdatedValues] = useState([]);
+  const [isRowChange, setIsRowChange] = useState<boolean>(false);
+  const [updatedValues, setUpdatedValues] = useState<UpdatedValue[]>([]);
+
   useEffect(() => {
     if (isRowChange) {
       const values = updatedValues.filter((song) => song.id !== id);

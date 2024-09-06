@@ -7,7 +7,7 @@ type Props = {
   setIsRowChange: (item: boolean) => void;
 };
 const TCell = ({ type, name, value, setValue, setIsRowChange }: Props) => {
-  const handelChange = (e) => {
+  const handelChange = (e: { target: { value: any } }) => {
     setIsRowChange(true);
     setValue(e.target.value);
   };
