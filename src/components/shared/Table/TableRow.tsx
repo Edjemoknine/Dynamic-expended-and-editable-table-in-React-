@@ -35,9 +35,19 @@ const TableRow = ({
 }: Props) => {
   const [collapsed, setCollapsed] = useState(false);
   //Updated state
-  const [song, setSong] = useState<string>(item.song);
-  const [artist, setArtist] = useState<string>(item.artist);
-  const [year, setYear] = useState<number>(item.year);
+  const initialState = {
+    id: item.id,
+    song: item.song,
+    artist: item.artist,
+    year: item.year,
+    description: item.description,
+  };
+  const [songData, setSongData] = useState(initialState);
+  const { song, artist, year } = songData;
+
+  // const [song, setSong] = useState<string>(item.song);
+  // const [artist, setArtist] = useState<string>(item.artist);
+  // const [year, setYear] = useState<number>(item.year);
 
   const [isRowChange, setIsRowChange] = useState<boolean>(false);
   const [updatedValues, setUpdatedValues] = useState<UpdatedValue[]>([]);
@@ -60,6 +70,12 @@ const TableRow = ({
   const handleDisplayed = (col: string) => {
     return columns.includes(col) ? true : false;
   };
+
+  const handleChange = (e: any) => {
+    setSongData({ ...songData, [e.target.name]: e.target.value });
+  };
+
+  console.log(songData);
 
   return (
     <>
@@ -87,6 +103,27 @@ const TableRow = ({
         </div>
 
         {/* Table data rows */}
+
+        {columns.map((column) => {
+          // return <TCell column={column} item={item} key={column} />
+          return (
+            <>
+              {handleDisplayed(column) && (
+                <TCell
+                  item={item}
+                  column={column}
+                  setIsRowChange={setIsRowChange}
+                  type={"text"}
+                  value={songData[column as keyof typeof songData]}
+                  setValue={handleChange}
+                  name={column}
+                  isEditable={isEditable}
+                />
+              )}
+            </>
+          );
+        })}
+        {/* 
         <div className="table-cell p-3">{id}</div>
 
         {handleDisplayed("song") && (
@@ -118,17 +155,20 @@ const TableRow = ({
             name={"year"}
             isEditable={isEditable}
           />
-        )}
+        )} */}
         {isRowChange && (
           <Check
             onClick={saveChanges}
-            className="absolute top-4 right-3 z-30 cursor-pointer font-bold hover:text-green-500"
+            className="absolute top-4 right-1 z-30 cursor-pointer font-bold hover:text-green-500"
           />
         )}
       </div>
       {isExpended && collapsed && (
         <tr>
-          <td colSpan={5} className="px-6 py-4 bg-gray-800 text-stone-50">
+          <td
+            colSpan={columns.length + 1}
+            className="px-6 py-4 bg-gray-800 text-stone-400"
+          >
             <div className="">{item.description} </div>
           </td>
         </tr>

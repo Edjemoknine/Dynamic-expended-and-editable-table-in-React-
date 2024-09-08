@@ -4,5 +4,5 @@ export type TabaleItemProps = {
   artist: string;
   year: number;
   checked?: boolean;
-  description?: string;
+  description?: string | undefined;
 };
