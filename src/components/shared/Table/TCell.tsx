@@ -5,8 +5,16 @@ type Props = {
   value: string | number;
   setValue: (item: any) => void;
   setIsRowChange: (item: boolean) => void;
+  isEditable: boolean;
 };
-const TCell = ({ type, name, value, setValue, setIsRowChange }: Props) => {
+const TCell = ({
+  type,
+  name,
+  value,
+  setValue,
+  setIsRowChange,
+  isEditable,
+}: Props) => {
   const handelChange = (e: { target: { value: any } }) => {
     setIsRowChange(true);
     setValue(e.target.value);
@@ -14,6 +22,7 @@ const TCell = ({ type, name, value, setValue, setIsRowChange }: Props) => {
   return (
     <div className="table-cell p-3">
       <input
+        disabled={!isEditable}
         name={name}
         type={type}
         value={value}

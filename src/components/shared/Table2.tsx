@@ -13,8 +13,10 @@ import { SelectPgae } from "./PerPage";
 type Props = {
   data: TabaleItemProps[];
   columns: string[];
+  isEditable: boolean;
+  isExpended: boolean;
 };
-const Table2 = ({ data }: Props) => {
+const Table2 = ({ data, isExpended, isEditable, columns }: Props) => {
   const { term } = useSongs();
   const [filtredData, setfiltredData] = useState(() => data);
   const debterm = useDebounce(term, 500);
@@ -108,26 +110,34 @@ const Table2 = ({ data }: Props) => {
     setfiltredData([...filtredData.filter((item) => !item.checked)]);
   };
 
-  // Update changes
+  // Dispaled Columns
+  const [displayedCols, setDisplayedCols] = useState(columns);
 
   return (
     <>
       <TableHeader
         selectedRows={selectedRows}
         deletedRowsAction={deleteSelectedRows}
+        displayedCols={displayedCols}
+        setDisplayedCols={setDisplayedCols}
+        columns={columns}
       />
 
       <div className="table w-full  rounded-xl overflow-hidden shadow  border table-auto  border-collapse  border-spacing-2">
         <THead
+          columns={displayedCols}
           allChecked={allChecked}
           handleCheck={handleSelect}
           handleSlectKey={handleSlectKey}
           sorted={sorted}
         />
         <TBody
+          columns={displayedCols}
           setfiltredData={setfiltredData}
           currentItems={currentItems}
           handleCheck={handleSelect}
+          isExpended={isExpended}
+          isEditable={isEditable}
         />
       </div>
 

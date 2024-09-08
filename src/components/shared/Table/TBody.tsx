@@ -5,8 +5,18 @@ type Props = {
   currentItems: TabaleItemProps[];
   handleCheck: (itemId: string, checked: boolean) => void;
   setfiltredData: Dispatch<SetStateAction<TabaleItemProps[]>>;
+  isExpended: boolean;
+  isEditable: boolean;
+  columns: string[];
 };
-const TBody = ({ currentItems, handleCheck, setfiltredData }: Props) => {
+const TBody = ({
+  currentItems,
+  handleCheck,
+  setfiltredData,
+  isEditable,
+  isExpended,
+  columns,
+}: Props) => {
   return (
     <>
       <div className="table-row-group p-4">
@@ -17,6 +27,9 @@ const TBody = ({ currentItems, handleCheck, setfiltredData }: Props) => {
             id={item.id}
             item={item}
             handleCheck={handleCheck}
+            isExpended={isExpended}
+            isEditable={isEditable}
+            columns={columns}
           />
         ))}
       </div>

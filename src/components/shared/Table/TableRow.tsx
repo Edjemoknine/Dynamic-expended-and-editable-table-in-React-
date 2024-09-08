@@ -14,18 +14,25 @@ type UpdatedValue = {
   artist: string;
   year: number;
 };
+type Props = {
+  id: number;
+  item: TabaleItemProps;
+  handleCheck: (id: string, checked: boolean) => void;
+  setfiltredData: Dispatch<SetStateAction<TabaleItemProps[]>>;
+  isExpended: boolean;
+  isEditable: boolean;
+  columns: string[];
+};
 
 const TableRow = ({
   item,
   handleCheck,
   id,
   setfiltredData,
-}: {
-  id: number;
-  item: TabaleItemProps;
-  handleCheck: (id: string, checked: boolean) => void;
-  setfiltredData: Dispatch<SetStateAction<TabaleItemProps[]>>;
-}) => {
+  isEditable,
+  isExpended,
+  columns,
+}: Props) => {
   const [collapsed, setCollapsed] = useState(false);
   //Updated state
   const [song, setSong] = useState<string>(item.song);
@@ -43,14 +50,15 @@ const TableRow = ({
   }, [song, artist, year, id, isRowChange, updatedValues]);
 
   const saveChanges = () => {
-    console.log("saveChanges");
-    console.log(updatedValues);
-
     setfiltredData((prev) => [
       ...prev.filter((song) => song.id !== id),
       ...updatedValues,
     ]);
     setIsRowChange(false);
+  };
+
+  const handleDisplayed = (col: string) => {
+    return columns.includes(col) ? true : false;
   };
 
   return (
@@ -67,37 +75,50 @@ const TableRow = ({
             checked={item?.checked!}
             id={item.id.toString()}
           />
-          <ChevronDown
-            onClick={() => setCollapsed(!collapsed)}
-            className={cn(
-              "cursor-pointer inline w-4 translate-y-3 mx-3 transition",
-              collapsed ? "rotate-180" : "rotate-0"
-            )}
-          />
+          {isExpended && (
+            <ChevronDown
+              onClick={() => setCollapsed(!collapsed)}
+              className={cn(
+                "cursor-pointer inline w-4 translate-y-3 mx-3 transition",
+                collapsed ? "rotate-180" : "rotate-0"
+              )}
+            />
+          )}
         </div>
-        <div className="table-cell p-3">{id}</div>
 
-        <TCell
-          setIsRowChange={setIsRowChange}
-          type={"text"}
-          value={song}
-          setValue={setSong}
-          name={"song"}
-        />
-        <TCell
-          setIsRowChange={setIsRowChange}
-          type={"text"}
-          value={artist}
-          setValue={setArtist}
-          name={"artist"}
-        />
-        <TCell
-          setIsRowChange={setIsRowChange}
-          type={"text"}
-          value={year}
-          setValue={setYear}
-          name={"year"}
-        />
+        {/* Table data rows */}
+        {handleDisplayed("id") && <div className="table-cell p-3">{id}</div>}
+
+        {handleDisplayed("song") && (
+          <TCell
+            setIsRowChange={setIsRowChange}
+            type={"text"}
+            value={song}
+            setValue={setSong}
+            name={"song"}
+            isEditable={isEditable}
+          />
+        )}
+        {handleDisplayed("artist") && (
+          <TCell
+            setIsRowChange={setIsRowChange}
+            type={"text"}
+            value={artist}
+            setValue={setArtist}
+            name={"artist"}
+            isEditable={isEditable}
+          />
+        )}
+        {handleDisplayed("year") && (
+          <TCell
+            setIsRowChange={setIsRowChange}
+            type={"text"}
+            value={year}
+            setValue={setYear}
+            name={"year"}
+            isEditable={isEditable}
+          />
+        )}
         {isRowChange && (
           <Check
             onClick={saveChanges}
@@ -105,7 +126,7 @@ const TableRow = ({
           />
         )}
       </div>
-      {collapsed && (
+      {isExpended && collapsed && (
         <tr>
           <td colSpan={5} className="px-6 py-4 bg-gray-800 text-stone-50">
             <div className="">{item.description} </div>
