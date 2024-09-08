@@ -9,14 +9,24 @@ import TBody from "./Table/TBody";
 import TFooter from "./Table/TFooter";
 import TableHeader from "./Table/TableHeader";
 import { SelectPgae } from "./PerPage";
+import Toggle from "./Toggle";
 
 type Props = {
   data: TabaleItemProps[];
   columns: string[];
   isEditable: boolean;
   isExpended: boolean;
+  setIsExpended: (item: boolean) => void;
+  setIsEditable: (row: boolean) => void;
 };
-const Table2 = ({ data, isExpended, isEditable, columns }: Props) => {
+const Table2 = ({
+  data,
+  isExpended,
+  isEditable,
+  columns,
+  setIsEditable,
+  setIsExpended,
+}: Props) => {
   const { term } = useSongs();
   const [filtredData, setfiltredData] = useState(() => data);
   const debterm = useDebounce(term, 500);
@@ -115,6 +125,18 @@ const Table2 = ({ data, isExpended, isEditable, columns }: Props) => {
 
   return (
     <>
+      <div>
+        <div className="flex flex-col items-start  gap-6 mb-10">
+          <div className="flex gap-4">
+            <Toggle onToggle={setIsEditable} />
+            Editable cell
+          </div>
+          <div className="flex gap-4">
+            <Toggle onToggle={setIsExpended} />
+            Expended Row
+          </div>
+        </div>
+      </div>
       <TableHeader
         selectedRows={selectedRows}
         deletedRowsAction={deleteSelectedRows}

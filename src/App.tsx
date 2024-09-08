@@ -16,6 +16,8 @@ function App() {
         columns={columns}
         isExpended={isExpended}
         isEditable={isEditable}
+        setIsExpended={setIsExpended}
+        setIsEditable={setIsEditable}
       />
       <Toaster />
     </main>

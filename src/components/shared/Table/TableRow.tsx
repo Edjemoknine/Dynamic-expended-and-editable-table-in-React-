@@ -87,7 +87,7 @@ const TableRow = ({
         </div>
 
         {/* Table data rows */}
-        {handleDisplayed("id") && <div className="table-cell p-3">{id}</div>}
+        <div className="table-cell p-3">{id}</div>
 
         {handleDisplayed("song") && (
           <TCell

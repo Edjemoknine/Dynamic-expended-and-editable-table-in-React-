@@ -15,14 +15,16 @@ interface Props {
 }
 export function SelectedCols({ value, onChange, columns }: Props) {
   const handleOptions = (value: string) => {
-    onChange((prev) => {
-      const isSelected = prev.includes(value);
-      const updatedSelection = isSelected
-        ? prev.filter((value) => value !== value)
-        : [...prev, value];
+    if (value !== "id") {
+      onChange((prev) => {
+        const isSelected = prev.includes(value);
+        const updatedSelection = isSelected
+          ? prev.filter((val) => val !== value)
+          : [...prev, value];
 
-      return updatedSelection;
-    });
+        return updatedSelection;
+      });
+    }
   };
 
   console.log(value);
